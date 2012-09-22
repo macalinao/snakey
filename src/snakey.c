@@ -6,7 +6,7 @@
 #include <time.h>
 #include <termios.h>
 
-#include "bloopsaphone/c/bloopsaphone.h"
+#include "../bloopsaphone/c/bloopsaphone.h"
 
 #define FPS 20
 #define FPS_MS (int) (1000 / FPS)
@@ -133,6 +133,20 @@ void draw_title() {
 
 char c;
 
+bool init_colors() {
+    if (!has_colors()) {
+        return false;
+    }
+
+    start_color();
+
+    // Let's define our colors
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+
+    return true;
+}
+
 bloops *B;
 bloopsaphone *square;
 
@@ -140,7 +154,9 @@ void init_sounds() {
     B = bloops_new();
 
     square = bloops_square();
-    square->params.punch = 0.5;
+    square->params.punch = 123.23;
+    square->params.freq = 440;
+    square->params.vibe = 123.23;
 
     bloops_track2(B, square, "- 8:C 16:D 8:E 16:F 8:G 8:C 16:D 8:E 16:F 8:G 8:C 16:D 8:E 16:F 8:G \
                                 16:A 8:B + 16:C 8:D 12:E 12:E 12:E \
@@ -154,6 +170,36 @@ void init_sounds() {
                                 12:D - 12:A 12:F# 12:D 12:F# 12:A + 12:D - 12:F# 12:D 12:A - 12:F# 12:F# 1:G#");
 
     bloops_play(B);
+}
+
+void init() {
+    // Initial game state
+    gamestate = STATE_TITLE;
+
+    // Start the screen
+    initscr();
+
+    // Remove cursor
+    curs_set(0);
+
+    if (!init_colors()) {
+        endwin();
+        printf("Your terminal unfortunately does not support colors. What a shame.");
+        exit(1);
+    }
+    init_sounds();
+
+    nonblock(NB_ENABLE);
+}
+
+/**
+ * Destroy the display and make things go back to normal.
+ */
+void destroy() {
+    nonblock(NB_DISABLE);
+
+    curs_set(1);
+    endwin();
 }
 
 void update_sounds() {
@@ -175,24 +221,8 @@ void render() {
 }
 
 int main() {
-    gamestate = STATE_TITLE;
-    initscr();
+    init();
 
-    if (!has_colors()) {
-        endwin();
-        printf("Your terminal unfortunately does not support colors. What a shame.");
-        exit(1);
-    }
-
-    start_color();
-
-    // Let's define our colors
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-
-    init_sounds();
-
-    nonblock(NB_ENABLE);
     int last = clock();
     while (true) {
         int now = clock();
@@ -223,8 +253,6 @@ int main() {
         render();
         refresh();
     }
-    nonblock(NB_DISABLE);
-
-    endwin();
+    destroy();
     return 0;
 }
