@@ -40,7 +40,7 @@ void init() {
     gamestate = STATE_TITLE;
 
     init_screen();
-    init_sounds();
+    sound_init();
     init_keyboard();
 }
 
@@ -53,7 +53,9 @@ void destroy() {
 }
 
 void update(float dt) {
-    update_sounds();
+    switch (gamestate) {
+        case STATE_TITLE: update_title(dt); break;
+    }
 }
 
 void render() {

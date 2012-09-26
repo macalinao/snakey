@@ -1,8 +1,5 @@
-#include "../bloopsaphone/c/bloopsaphone.h"
+#define TITLE 0
 
-bloops *B;
-bloopsaphone *square;
+void sound_init();
 
-void init_sounds();
-
-void update_sounds();
+void sound_play(int sound);
