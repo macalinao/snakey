@@ -1,4 +1,4 @@
-#define TITLE 0
+#define SOUND_TITLE 0
 
 void sound_init();
 

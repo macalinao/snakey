@@ -35,13 +35,28 @@ typedef struct {
     segment parts[1000];
 } snake;
 
+void set_state(int state) {
+    switch (gamestate) {
+        case STATE_TITLE: destroy_title(); break;
+        default: break;
+    }
+
+    switch (state) {
+        case STATE_TITLE: init_title(); break;
+        default: break;
+    }
+
+    gamestate = state;
+}
+
 void init() {
-    // Initial game state
-    gamestate = STATE_TITLE;
+    gamestate = -1;
 
     init_screen();
     sound_init();
     init_keyboard();
+
+    set_state(STATE_TITLE);
 }
 
 /**

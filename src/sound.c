@@ -5,7 +5,8 @@ bloopsaphone *square;
 bloops* sounds[10];
 
 void sound_init() {
-
+    load_instruments();
+    load_sounds();
 }
 
 void load_instruments() {

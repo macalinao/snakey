@@ -7,7 +7,7 @@ build:
 	mkdir -p dist/
 
 	for f in src/*.c; do \
-		gcc -Wall -c $${f} -o build/$$(basename $${f}).o; \
+		gcc -Wall -c $${f} -o build/$$(basename -s .c $${f}).o; \
 	done
 
 	# Final build

@@ -1,6 +1,7 @@
 #include <curses.h>
 
 #include "screen.h"
+#include "sound.h"
 
 bool title_drawn;
 
@@ -60,6 +61,14 @@ void redraw_boundaries() {
     }
 
     attroff(COLOR_PAIR(1));
+}
+
+void init_title() {
+    sound_play(SOUND_TITLE);
+}
+
+void destroy_title() {
+    
 }
 
 void update_title(float dt) {
