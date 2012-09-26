@@ -7,6 +7,9 @@ bool title_drawn;
 void draw_title() {
     attron(COLOR_PAIR(2));
 
+    int rows = get_rows();
+    int cols = get_cols();
+
     int toplogo = rows / 4;
     int logoleft = (cols / 2) - 32;
 
@@ -32,6 +35,9 @@ void draw_title() {
 }
 
 void redraw_boundaries() {
+    int rows = get_rows();
+    int cols = get_cols();
+
     clear();
 
     attron(COLOR_PAIR(1));
