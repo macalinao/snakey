@@ -57,8 +57,8 @@ void update(float dt) {
 }
 
 void render() {
-    if (gamestate == STATE_TITLE) {
-        render_title();
+    switch (gamestate) {
+        case STATE_TITLE: render_title(); break;
     }
 }
 
