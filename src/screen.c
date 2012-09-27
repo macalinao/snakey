@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/ioctl.h>
 #include <stdbool.h>
 #include <termios.h>
