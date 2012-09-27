@@ -1,4 +1,5 @@
-,PHONY: all
+.DEFAULT_GOAL: all
+.PHONY: all
 all: clean build
 
 .PHONY: build
