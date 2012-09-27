@@ -68,6 +68,11 @@ void destroy() {
 }
 
 void update(float dt) {
+    poll_keyboard();        
+    if (update_window_size()) {
+        redraw_boundaries();
+        title_drawn = false;
+    }
     switch (gamestate) {
         case STATE_TITLE: update_title(dt); break;
     }
@@ -77,6 +82,9 @@ void render() {
     switch (gamestate) {
         case STATE_TITLE: render_title(); break;
     }
+    
+    // Draw the changes
+    refresh();
 }
 
 void signal_callback_handler(int signum) {
@@ -101,17 +109,8 @@ int main() {
             usleep(FPS_MS - ms);
         }
 
-        poll_keyboard();
-
-        if (update_window_size()) {
-            redraw_boundaries();
-            title_drawn = false;
-        }
         update(secs);
-
-        // Rendering
         render();
-        refresh();
     }
     destroy();
     return 0;
