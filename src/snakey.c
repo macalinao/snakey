@@ -79,7 +79,14 @@ void render() {
     }
 }
 
+void signal_callback_handler(int signum) {
+   destroy();
+   exit(0);
+}
+
 int main() {
+    signal(SIGINT, signal_callback_handler);
+
     init();
 
     int last = clock();
