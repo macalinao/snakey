@@ -4,7 +4,13 @@ A simple little snake game for the terminal, written in C.
 I don't know C, so this code will suck.
 
 ## Compiling
-**snakey** uses GNU make to handle things. To compile, use the command `make`. If you don't have GNU make installed,
+**snakey** uses GNU make to handle everything. If you don't have it, just read the `Makefile` and do all of the
+commands in it manually.
+
+First you want to do `make deps` to compile dependencies. Note that you need portaudio installed beforehand.
+If you don't have it, your package manager can probably install it for you.
+
+Next, to compile, use the command `make`. If you don't have GNU make installed,
 you might want to install it sometime. It's a really nice program.
 
 ## License

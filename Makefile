@@ -24,6 +24,12 @@ clean:
 	@rm -rf build/
 	@rm -rf dist/
 
+.PHONY: deps
+deps:
+	@echo Compiling dependencies...
+	@git submodule update --init
+	@cd bloopsaphone; make
+
 .PHONY: exec
 exec:
 	@./dist/snakey
