@@ -8,9 +8,6 @@ bloops* sounds[10];
 
 void load_instruments() {
     square = bloops_square();
-    square->params.punch = 123.23;
-    square->params.freq = 440;
-    square->params.vibe = 123.23;
 }
 
 void load_sounds() {
