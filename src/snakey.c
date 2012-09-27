@@ -87,7 +87,7 @@ int main() {
         int now = clock();
         int delta = now - last;
         last = now;
-        float secs = (float) now / CLOCKS_PER_SEC;
+        float secs = (float) delta / CLOCKS_PER_SEC;
 
         int ms = (int) (secs * 1000);
         if (ms < FPS_MS) {

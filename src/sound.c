@@ -1,13 +1,10 @@
+#include "sound.h"
+
 #include "../bloopsaphone/c/bloopsaphone.h"
 
 bloopsaphone *square;
 
 bloops* sounds[10];
-
-void sound_init() {
-    load_instruments();
-    load_sounds();
-}
 
 void load_instruments() {
     square = bloops_square();
@@ -17,7 +14,7 @@ void load_instruments() {
 }
 
 void load_sounds() {
-    sounds[0] = bloops_new();
+    sounds[SOUND_TITLE] = bloops_new();
     bloops_track2(sounds[0], square, "- 8:C 16:D 8:E 16:F 8:G 8:C 16:D 8:E 16:F 8:G 8:C 16:D 8:E 16:F 8:G \
                                 16:A 8:B + 16:C 8:D 12:E 12:E 12:E \
                                 E - E + E - E + D - D D 12:D 12:D 12:D 1:E");
@@ -28,6 +25,11 @@ void load_sounds() {
                                 16:E 8:F# 16:G 8:A 12:B 12:B 12:B \
                                 12:E 12:G# 12:B + 12:E - 12:B 12:G# 12:G# 12:B + 12:E 12:G# 12:B + 12:E \
                                 12:D - 12:A 12:F# 12:D 12:F# 12:A + 12:D - 12:F# 12:D 12:A - 12:F# 12:F# 1:G#");
+}
+
+void sound_init() {
+    load_instruments();
+    load_sounds();
 }
 
 void sound_play(int sound) {
