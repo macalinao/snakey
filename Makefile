@@ -23,3 +23,7 @@ clean:
 	@echo Cleaning...
 	@rm -rf build/
 	@rm -rf dist/
+
+.PHONY: exec
+exec:
+	@./dist/snakey
