@@ -3,17 +3,22 @@ all: clean build
 
 .PHONY: build
 build:
-	mkdir -p build/
-	mkdir -p dist/
+	@echo Recreating folders...
+	@mkdir -p build/
+	@mkdir -p dist/
 
-	for f in src/*.c; do \
+	@echo Compiling...
+	@for f in src/*.c; do \
 		gcc -Wall -c $${f} -o build/$$(basename -s .c $${f}).o; \
 	done
 
-	# Final build
-	gcc build/*.o -o dist/snakey -lncurses -lportaudio bloopsaphone/libbloopsaphone.a
+	@echo Linking and creating executable...
+	@gcc build/*.o -o dist/snakey -lncurses -lportaudio bloopsaphone/libbloopsaphone.a
+
+	@echo Done.
 
 .PHONY: clean
 clean:
-	rm -rf build/
-	rm -rf dist/
+	@echo Cleaning...
+	@rm -rf build/
+	@rm -rf dist/
