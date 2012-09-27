@@ -1,5 +1,6 @@
 #include <curses.h>
 
+#include "keyboard.h"
 #include "screen.h"
 #include "sound.h"
 
@@ -68,11 +69,16 @@ void init_title() {
 }
 
 void destroy_title() {
-    
+
 }
 
 void update_title(float dt) {
+    if (!sound_is_done(SOUND_TITLE)) return;
 
+    char last = get_last_char();
+    if (last != '\0') {
+        sound_play(SOUND_CLICK);
+    }
 }
 
 void render_title() {

@@ -25,6 +25,9 @@ void load_sounds() {
                                 16:E 8:F# 16:G 8:A 12:B 12:B 12:B \
                                 12:E 12:G# 12:B + 12:E - 12:B 12:G# 12:G# 12:B + 12:E 12:G# 12:B + 12:E \
                                 12:D - 12:A 12:F# 12:D 12:F# 12:A + 12:D - 12:F# 12:D 12:A - 12:F# 12:F# 1:G#");
+
+    sounds[SOUND_CLICK] = bloops_new();
+    bloops_track2(sounds[SOUND_CLICK], square, "+ + 32:C 32:E");
 }
 
 void sound_init() {
@@ -34,4 +37,8 @@ void sound_init() {
 
 void sound_play(int sound) {
     bloops_play(sounds[sound]);
+}
+
+bool sound_is_done(int sound) {
+    return (bool) bloops_is_done(sounds[sound]);
 }
