@@ -8,6 +8,7 @@
 
 #include "defines.h"
 
+#include "clock.h"
 #include "keyboard.h"
 #include "screen.h"
 #include "sound.h"
@@ -93,17 +94,10 @@ int main() {
 
     init();
 
-    int last = clock();
+    float secs;
+    clock_start();
     while (true) {
-        int now = clock();
-        int delta = now - last;
-        last = now;
-        float secs = (float) delta / CLOCKS_PER_SEC;
-
-        int ms = (int) (secs * 1000);
-        if (ms < FPS_MS) {
-            usleep(FPS_MS - ms);
-        }
+        secs = clock_update();
 
         update(secs);
         render();
