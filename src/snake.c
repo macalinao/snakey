@@ -44,6 +44,8 @@ snake *snake_new(int x, int y) {
     s->head = head;
     s->tail = tail;
 
+    s->length = 3;
+
     return s;
 }
 
@@ -81,21 +83,11 @@ void snake_update(snake *snake) {
         // Free old tail
         free(old_tail);
     } else {
+        (snake->length)++;
         (*segs_left)--;
     }
 }
 
 void snake_render(snake *snake) {
 
-}
-
-int snake_length(snake *snake) {
-    int length;
-
-    segment *seg = snake->head;
-    while (seg->next != snake->tail) {
-        length++;
-    }
-
-    return length;
 }

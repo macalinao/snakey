@@ -43,6 +43,11 @@ typedef struct {
      * and add to its body.
      */
     int segments_left;
+
+    /**
+     * The length of the snake.
+     */
+    int length;
 } snake;
 
 snake *snake_new(int x, int y);
@@ -50,5 +55,3 @@ snake *snake_new(int x, int y);
 void snake_update(snake *snake);
 
 void snake_render(snake *snake);
-
-int snake_length(snake *snake);
