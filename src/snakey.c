@@ -17,21 +17,6 @@
 
 int gamestate;
 
-/**
- * Represents a segment of a snake.
- */
-typedef struct {
-    int x;
-    int y;
-} segment;
-
-/**
- * Represents a snake.
- */
-typedef struct {
-    segment parts[1000];
-} snake;
-
 void set_state(int state) {
     switch (gamestate) {
         case STATE_TITLE: destroy_title(); break;
