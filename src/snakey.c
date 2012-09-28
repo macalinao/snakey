@@ -26,12 +26,12 @@ void set_state(int state) {
 
     clear();
 
-    switch (state) {
+    gamestate = state;
+
+    switch (gamestate) {
         case STATE_TITLE: title_init(); break;
         default: break;
     }
-
-    gamestate = state;
 }
 
 void init() {
