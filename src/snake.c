@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include <stdlib.h>
 
 #include "snake.h"
@@ -31,7 +32,7 @@ static void segment_insert(segment *prev, segment *next, segment *s) {
     s->next = next;
 }
 
-snake *snake_new(int x, int y) {
+snake *snake_new(int x, int y, int color) {
     snake *s = (snake*) malloc(sizeof(snake));
 
     // Snakes start out as 3 segments
@@ -45,6 +46,8 @@ snake *snake_new(int x, int y) {
     s->tail = tail;
 
     s->length = 3;
+
+    s->color = color;
 
     return s;
 }
@@ -89,5 +92,11 @@ void snake_advance(snake *snake) {
 }
 
 void snake_render(snake *snake) {
-    
+    attron(COLOR_PAIR(snake->color));
+    segment *seg = snake->head;
+    while (seg != NULL) {
+        mvaddch(seg->x, seg->y, '+');
+        seg = seg->next;
+    }
+    attroff(COLOR_PAIR(snake->color));
 }

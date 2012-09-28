@@ -48,9 +48,14 @@ typedef struct {
      * The length of the snake.
      */
     int length;
+
+    /**
+     * The color of the snake.
+     */
+    int color;
 } snake;
 
-snake *snake_new(int x, int y);
+snake *snake_new(int x, int y, int color);
 
 void snake_advance(snake *snake);
 
