@@ -4,7 +4,15 @@
 #include "screen.h"
 #include "sound.h"
 
+#define SEL_START 0
+#define SEL_HS 1
+#define SEL_CREDS 2
+
+int current_selection;
+int menu_top;
+
 bool title_drawn;
+bool menu_drawn;
 
 void draw_title() {
     attron(COLOR_PAIR(2));
@@ -23,15 +31,49 @@ void draw_title() {
     mvprintw(toplogo + 5, logoleft, "        \\/         \\/         \\/        \\/        \\/  \\/       ");
 
     attroff(COLOR_PAIR(2));
+}
 
-    int botlogo = rows - toplogo;
-    int colsdiv2 = (cols / 2);
+void draw_menu() {
+    menu_top = get_rows() - (get_rows() / 4) - 3;
+    int colstart = (get_cols() / 2) - 14;
 
     attron(COLOR_PAIR(3));
 
-    mvprintw(botlogo, colsdiv2 - 5, "S T A R T");
-    mvprintw(botlogo + 2, colsdiv2 - 12, "H I G H   S C O R E S");
-    mvprintw(botlogo + 4, colsdiv2 - 7, "C R E D I T S");
+    if (current_selection == SEL_START) {
+        attroff(COLOR_PAIR(3));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(menu_top,     colstart, ">       S T A R T       <");
+        attroff(COLOR_PAIR(2));
+
+        attron(COLOR_PAIR(3));
+    } else {
+        mvprintw(menu_top,     colstart, "        S T A R T        ");
+    }
+
+    if (current_selection == SEL_HS) {
+        attroff(COLOR_PAIR(3));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(menu_top + 2, colstart, "> H I G H   S C O R E S <");
+        attroff(COLOR_PAIR(2));
+
+        attron(COLOR_PAIR(3));
+    } else {
+        mvprintw(menu_top + 2, colstart, "  H I G H   S C O R E S  ");
+    }
+
+    if (current_selection == SEL_CREDS) {
+        attroff(COLOR_PAIR(3));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(menu_top + 4, colstart, ">     C R E D I T S     <");
+        attroff(COLOR_PAIR(2));
+
+        attron(COLOR_PAIR(3));
+    } else {
+        mvprintw(menu_top + 4, colstart, "      C R E D I T S      ");
+    }
 
     attroff(COLOR_PAIR(3));
 }
@@ -64,26 +106,52 @@ void redraw_boundaries() {
     attroff(COLOR_PAIR(1));
 }
 
-void init_title() {
+void title_init() {
+    current_selection = 0;
     sound_play(SOUND_TITLE);
 }
 
-void destroy_title() {
+void title_destroy() {
 
 }
 
-void update_title(float dt) {
+void title_update(float dt) {
     if (!sound_is_done(SOUND_TITLE)) return;
 
     char last = get_last_char();
     if (last != '\0') {
+        int move = 0;
+        switch (last) {
+            case 'j': move = 1; break;
+            case 'k': move = -1; break;
+        }
+        current_selection += move;
+        if (current_selection == -1) {
+            current_selection = 2;
+        }
+
+        if (current_selection == 3) {
+            current_selection = 0;
+        }
+        menu_drawn = false;
         sound_play(SOUND_CLICK);
     }
 }
 
-void render_title() {
+void title_render() {
     if (!title_drawn) {
         draw_title();
         title_drawn = true;
     }
+
+    if (!menu_drawn) {
+        draw_menu();
+        menu_drawn = true;
+    }
+}
+
+void title_screen_resized() {
+    redraw_boundaries();
+    title_drawn = false;
+    menu_drawn = false;
 }

@@ -1,15 +1,11 @@
 #include <curses.h>
 
-bool title_drawn;
+void title_init();
 
-void draw_title();
+void title_destroy();
 
-void redraw_boundaries();
+void title_update(float dt);
 
-void init_title();
+void title_render();
 
-void destroy_title();
-
-void update_title(float dt);
-
-void render_title();
+void title_screen_resized();

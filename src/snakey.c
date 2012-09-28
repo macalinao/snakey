@@ -19,14 +19,14 @@ int gamestate;
 
 void set_state(int state) {
     switch (gamestate) {
-        case STATE_TITLE: destroy_title(); break;
+        case STATE_TITLE: title_destroy(); break;
         default: break;
     }
 
     clear();
 
     switch (state) {
-        case STATE_TITLE: init_title(); break;
+        case STATE_TITLE: title_init(); break;
         default: break;
     }
 
@@ -58,17 +58,18 @@ void update() {
 
     poll_keyboard();        
     if (update_window_size()) {
-        redraw_boundaries();
-        title_drawn = false;
+        switch (gamestate) {
+            case STATE_TITLE: title_screen_resized(); break;
+        }
     }
     switch (gamestate) {
-        case STATE_TITLE: update_title(dt); break;
+        case STATE_TITLE: title_update(dt); break;
     }
 }
 
 void render() {
     switch (gamestate) {
-        case STATE_TITLE: render_title(); break;
+        case STATE_TITLE: title_render(); break;
     }
     
     // Draw the changes
