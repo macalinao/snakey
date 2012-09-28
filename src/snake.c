@@ -49,10 +49,40 @@ snake *snake_new(int x, int y) {
 
 void snake_update(snake *snake) {
     // Prepend a new segment based on the current head
-    segment *next = (segment*) malloc(sizeof(segment));
-    segment *head = snake->head;
+    segment *old_head = snake->head;
 
-    next->next = head;
+    int xoff = 0;
+    int yoff = 0;
+
+    switch (snake->dir) {
+        case DIR_U: yoff = -1; break;
+        case DIR_L: xoff = -1; break;
+        case DIR_R: xoff =  1; break;
+        case DIR_D: yoff =  1; break;
+    }
+
+    segment *new_head = segment_new(old_head->x + xoff, old_head->y + yoff);
+    snake->head = new_head;
+
+    old_head->prev = new_head;
+    new_head->next = old_head;
+
+    int *segs_left = &snake->segments_left;
+
+    if (*segs_left == 0) {
+        // Remove the last segment; we aren't shrinking
+        segment *old_tail = snake->tail;
+
+        // Update the tail
+        segment *new_tail = old_tail->prev;
+        new_tail->next = NULL;
+        snake->tail = new_tail;
+
+        // Free old tail
+        free(old_tail);
+    } else {
+        *segs_left--;
+    }
 }
 
 void snake_render(snake *snake) {
