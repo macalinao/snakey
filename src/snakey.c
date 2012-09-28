@@ -6,17 +6,13 @@
 #include <time.h>
 #include <termios.h>
 
+#include "defines.h"
+
 #include "keyboard.h"
 #include "screen.h"
 #include "sound.h"
 
 #include "state_title.h"
-
-#define FPS 20
-#define FPS_MS (int) (1000 / FPS)
-
-#define STATE_TITLE 0
-#define STATE_INGAME 1
 
 int gamestate;
 

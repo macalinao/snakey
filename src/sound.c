@@ -1,3 +1,5 @@
+#include "defines.h"
+
 #include "sound.h"
 
 #include "../bloopsaphone/c/bloopsaphone.h"
@@ -27,6 +29,8 @@ void load_sounds() {
     bloops_track2(sounds[SOUND_CLICK], square, "+ + 32:C 32:E");
 }
 
+#if SOUND_ENABLE
+
 void sound_init() {
     load_instruments();
     load_sounds();
@@ -39,3 +43,11 @@ void sound_play(int sound) {
 bool sound_is_done(int sound) {
     return (bool) bloops_is_done(sounds[sound]);
 }
+
+#else
+
+void sound_init() {}
+void sound_play(int sound) {}
+bool sound_is_done(int sound) { return true; }
+
+#endif
