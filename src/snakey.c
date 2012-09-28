@@ -54,6 +54,8 @@ void init() {
     init_keyboard();
 
     set_state(STATE_TITLE);
+
+    clock_start();
 }
 
 /**
@@ -64,7 +66,9 @@ void destroy() {
     destroy_screen();
 }
 
-void update(float dt) {
+void update() {
+    float dt = clock_update();
+
     poll_keyboard();        
     if (update_window_size()) {
         redraw_boundaries();
@@ -94,14 +98,12 @@ int main() {
 
     init();
 
-    float secs;
-    clock_start();
     while (true) {
-        secs = clock_update();
-
-        update(secs);
+        update();
         render();
     }
+
     destroy();
+
     return 0;
 }
