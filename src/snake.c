@@ -89,5 +89,5 @@ void snake_update(snake *snake) {
 }
 
 void snake_render(snake *snake) {
-
+    
 }

@@ -23,6 +23,8 @@ void set_state(int state) {
         default: break;
     }
 
+    clear();
+
     switch (state) {
         case STATE_TITLE: init_title(); break;
         default: break;
