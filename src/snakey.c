@@ -18,7 +18,14 @@
 
 int gamestate;
 
+void destroy();
+
 void set_state(int state) {
+    if (state == STATE_QUIT) {
+        destroy();
+        exit(0);
+    }
+
     switch (gamestate) {
         case STATE_TITLE: title_destroy(); break;
         default: break;

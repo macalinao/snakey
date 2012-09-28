@@ -1,12 +1,15 @@
 #include <curses.h>
 
+#include "defines.h"
 #include "keyboard.h"
 #include "screen.h"
+#include "snakey.h"
 #include "sound.h"
 
 #define SEL_START 0
 #define SEL_HS 1
 #define SEL_CREDS 2
+#define SEL_QUIT 3
 
 int current_selection;
 int menu_top;
@@ -75,6 +78,18 @@ void draw_menu() {
         mvprintw(menu_top + 4, colstart, "      C R E D I T S      ");
     }
 
+    if (current_selection == SEL_QUIT) {
+        attroff(COLOR_PAIR(3));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(menu_top + 6, colstart, ">        Q U I T        <");
+        attroff(COLOR_PAIR(2));
+
+        attron(COLOR_PAIR(3));
+    } else {
+        mvprintw(menu_top + 6, colstart, "         Q U I T         ");
+    }
+
     attroff(COLOR_PAIR(3));
 }
 
@@ -106,6 +121,14 @@ void redraw_boundaries() {
     attroff(COLOR_PAIR(1));
 }
 
+void menu_select() {
+    switch (current_selection) {
+        case SEL_QUIT:
+            set_state(STATE_QUIT);
+            break;
+    }
+}
+
 void title_init() {
     current_selection = 0;
     sound_play(SOUND_TITLE);
@@ -124,13 +147,14 @@ void title_update(float dt) {
         switch (last) {
             case 'j': move = 1; break;
             case 'k': move = -1; break;
+            case ' ': menu_select(); return;
         }
         current_selection += move;
         if (current_selection == -1) {
-            current_selection = 2;
+            current_selection = 3;
         }
 
-        if (current_selection == 3) {
+        if (current_selection == 4) {
             current_selection = 0;
         }
         menu_drawn = false;
