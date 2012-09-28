@@ -1,5 +1,3 @@
-#include <curses.h>
-
 void title_init();
 
 void title_destroy();
