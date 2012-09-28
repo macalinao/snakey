@@ -72,7 +72,7 @@ void snake_advance(snake *snake) {
     old_head->prev = new_head;
     new_head->next = old_head;
 
-    int *segs_left = &snake->segments_left;
+    int *segs_left = &(snake->segments_left);
 
     if (*segs_left == 0) {
         // Remove the last segment; we aren't shrinking
