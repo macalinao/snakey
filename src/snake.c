@@ -49,7 +49,7 @@ snake *snake_new(int x, int y) {
     return s;
 }
 
-void snake_update(snake *snake) {
+void snake_advance(snake *snake) {
     // Prepend a new segment based on the current head
     segment *old_head = snake->head;
 

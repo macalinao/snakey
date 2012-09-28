@@ -52,6 +52,6 @@ typedef struct {
 
 snake *snake_new(int x, int y);
 
-void snake_update(snake *snake);
+void snake_advance(snake *snake);
 
 void snake_render(snake *snake);
