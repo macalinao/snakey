@@ -81,7 +81,7 @@ void snake_update(snake *snake) {
         // Free old tail
         free(old_tail);
     } else {
-        *segs_left--;
+        (*segs_left)--;
     }
 }
 
