@@ -57,6 +57,12 @@ typedef struct {
 
 snake *snake_new(int x, int y, int color);
 
-void snake_advance(snake *snake);
+void snake_advance(snake *snake, segment *old_tail);
 
-void snake_render(snake *snake);
+/**
+ * Draws the snake at the given position.
+ * @param snake The snake to draw
+ * @param xoff  X-offset assuming the snake's left side is 0
+ * @param yoff  Y-offset assuming the snake's top side is 0
+ */
+void snake_draw(snake *snake, int xoff, int yoff);

@@ -48,11 +48,12 @@ snake *snake_new(int x, int y, int color) {
     s->length = 3;
 
     s->color = color;
+    s->dir = DIR_L;
 
     return s;
 }
 
-void snake_advance(snake *snake) {
+void snake_advance(snake *snake, segment *old_tail) {
     // Prepend a new segment based on the current head
     segment *old_head = snake->head;
 
@@ -76,26 +77,23 @@ void snake_advance(snake *snake) {
 
     if (*segs_left == 0) {
         // Remove the last segment; we aren't shrinking
-        segment *old_tail = snake->tail;
+        old_tail = snake->tail;
 
         // Update the tail
         segment *new_tail = old_tail->prev;
         new_tail->next = NULL;
         snake->tail = new_tail;
-
-        // Free old tail
-        free(old_tail);
     } else {
         (snake->length)++;
         (*segs_left)--;
     }
 }
 
-void snake_render(snake *snake) {
+void snake_draw(snake *snake, int xoff, int yoff) {
     attron(COLOR_PAIR(snake->color));
     segment *seg = snake->head;
     while (seg != NULL) {
-        mvaddch(seg->x, seg->y, '+');
+        mvaddch(seg->y + yoff, seg->x + xoff, '+');
         seg = seg->next;
     }
     attroff(COLOR_PAIR(snake->color));
