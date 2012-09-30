@@ -123,6 +123,10 @@ void redraw_boundaries() {
 
 void menu_select() {
     switch (current_selection) {
+        case SEL_START:
+            set_state(STATE_INGAME);
+            break;
+
         case SEL_QUIT:
             set_state(STATE_QUIT);
             break;
@@ -168,7 +172,7 @@ void title_render() {
         title_drawn = true;
     }
 
-    if (!menu_drawn) {
+    if (!menu_drawn && sound_is_done(SOUND_TITLE)) {
         draw_menu();
         menu_drawn = true;
     }

@@ -15,6 +15,7 @@
 #include "sound.h"
 
 #include "state_title.h"
+#include "state_ingame.h"
 
 int gamestate;
 
@@ -28,6 +29,7 @@ void set_state(int state) {
 
     switch (gamestate) {
         case STATE_TITLE: title_destroy(); break;
+        case STATE_INGAME: ingame_destroy(); break;
         default: break;
     }
 
@@ -37,6 +39,7 @@ void set_state(int state) {
 
     switch (gamestate) {
         case STATE_TITLE: title_init(); break;
+        case STATE_INGAME: ingame_init(); break;
         default: break;
     }
 }
@@ -68,16 +71,19 @@ void update() {
     if (update_window_size()) {
         switch (gamestate) {
             case STATE_TITLE: title_screen_resized(); break;
+            case STATE_INGAME: ingame_screen_resized(); break;
         }
     }
     switch (gamestate) {
         case STATE_TITLE: title_update(dt); break;
+        case STATE_INGAME: ingame_update(dt); break;
     }
 }
 
 void render() {
     switch (gamestate) {
         case STATE_TITLE: title_render(); break;
+        case STATE_INGAME: ingame_render(); break;
     }
     
     // Draw the changes
