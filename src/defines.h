@@ -5,4 +5,4 @@
 #define STATE_INGAME 1
 
 #define FPS 20
-#define FPS_MS (int) (1000 / FPS)
+#define SECS_PER_FRAME (1.0f / FPS)

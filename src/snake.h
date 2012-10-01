@@ -57,7 +57,7 @@ typedef struct {
 
 snake *snake_new(int x, int y, int color);
 
-void snake_advance(snake *snake, segment *old_tail);
+void snake_advance(snake *snake, segment **old_tail);
 
 /**
  * Draws the snake at the given position.

@@ -1,8 +1,12 @@
 #include <curses.h>
 #include <stdlib.h>
+#include <time.h>
 
+#include "clock.h"
+#include "defines.h"
 #include "keyboard.h"
 #include "snake.h"
+#include "util.h"
 
 snake *s;
 segment *old_tail;
@@ -11,7 +15,7 @@ bool snake_moved;
 
 void ingame_init() {
     s = snake_new(10, 10, 1);
-    snake_moved = true;
+    snake_moved = false;
 }
 
 void ingame_destroy() {
@@ -41,17 +45,22 @@ void ingame_update(float dt) {
     }
 
     secs_since_last_advance += dt;
-    if (secs_since_last_advance > 0.1f) {
-        snake_advance(s, old_tail);
+    if (secs_since_last_advance > 0.05f) {
+        snake_advance(s, &old_tail);
         snake_moved = true;
-        secs_since_last_advance -= 0.1f;
+        secs_since_last_advance -= 0.05f;
     }
 }
 
 void ingame_render() {
     if (snake_moved) {
+        mvaddch(old_tail->y + 1, old_tail->x + 1, ' ');
         snake_draw(s, 1, 1);
         refresh();
+
+        snake_moved = false;
+
+        free(old_tail);
     }
 }
 

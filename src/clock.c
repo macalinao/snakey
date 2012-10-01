@@ -1,24 +1,31 @@
-#include <time.h>
+#include <sys/time.h>
 #include <unistd.h>
 
 #include "defines.h"
 
-int last;
+struct timeval last;
+
+struct timeval get_now() {
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    return t;
+}
 
 void clock_start() {
-    last = clock();
+    last = get_now();
 }
 
 float clock_update() {
-    int now = clock();
-    int delta = now - last;
+    struct timeval now =  get_now();
+    int deltas = now.tv_sec - last.tv_sec;
+    int deltau = now.tv_usec - last.tv_usec;
     last = now;
-    float secs = (float) delta / CLOCKS_PER_SEC;
 
-    int ms = (int) (secs * 1000);
-    if (ms < FPS_MS) {
-        usleep(FPS_MS - ms);
+    float delta = deltas + ((float) deltau / 1000000);
+
+    if (delta < SECS_PER_FRAME) {
+        usleep((int) ((SECS_PER_FRAME - delta) * 1000000));
     }
 
-    return secs;
+    return delta;
 }

@@ -53,7 +53,7 @@ snake *snake_new(int x, int y, int color) {
     return s;
 }
 
-void snake_advance(snake *snake, segment *old_tail) {
+void snake_advance(snake *snake, segment **old_tail) {
     // Prepend a new segment based on the current head
     segment *old_head = snake->head;
 
@@ -77,10 +77,10 @@ void snake_advance(snake *snake, segment *old_tail) {
 
     if (*segs_left == 0) {
         // Remove the last segment; we aren't shrinking
-        old_tail = snake->tail;
+        *old_tail = snake->tail;
 
         // Update the tail
-        segment *new_tail = old_tail->prev;
+        segment *new_tail = (*old_tail)->prev;
         new_tail->next = NULL;
         snake->tail = new_tail;
     } else {
