@@ -1,9 +1,9 @@
-void ingame_init();
+void state_ingame_init();
 
-void ingame_destroy();
+void state_ingame_destroy();
 
-void ingame_update(float dt);
+void state_ingame_update(float dt);
 
-void ingame_render();
+void state_ingame_render();
 
-void ingame_screen_resized();
+void state_ingame_screen_resized();

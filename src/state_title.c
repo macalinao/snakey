@@ -133,18 +133,18 @@ void menu_select() {
     }
 }
 
-void title_init() {
+void state_title_init() {
     current_selection = 0;
     sound_play(SOUND_TITLE);
 }
 
-void title_destroy() {
-
+void state_title_destroy() {
+    if (!sound_is_done(SOUND_TITLE)) {
+        sound_stop(SOUND_TITLE);
+    }
 }
 
-void title_update(float dt) {
-    if (!sound_is_done(SOUND_TITLE)) return;
-
+void state_title_update(float dt) {
     char last = get_last_char();
     if (last != '\0') {
         int move = 0;
@@ -166,19 +166,19 @@ void title_update(float dt) {
     }
 }
 
-void title_render() {
+void state_title_render() {
     if (!title_drawn) {
         draw_title();
         title_drawn = true;
     }
 
-    if (!menu_drawn && sound_is_done(SOUND_TITLE)) {
+    if (!menu_drawn) {
         draw_menu();
         menu_drawn = true;
     }
 }
 
-void title_screen_resized() {
+void state_title_screen_resized() {
     redraw_boundaries();
     title_drawn = false;
     menu_drawn = false;

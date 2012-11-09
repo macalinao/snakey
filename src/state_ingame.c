@@ -6,6 +6,7 @@
 #include "defines.h"
 #include "keyboard.h"
 #include "snake.h"
+#include "snakey.h"
 #include "util.h"
 
 snake *s;
@@ -13,16 +14,16 @@ segment *old_tail;
 float secs_since_last_advance;
 bool snake_moved;
 
-void ingame_init() {
+void state_ingame_init() {
     s = snake_new(10, 10, 1);
     snake_moved = false;
 }
 
-void ingame_destroy() {
+void state_ingame_destroy() {
 
 }
 
-void ingame_update(float dt) {
+void state_ingame_update(float dt) {
     char c = get_last_char();
     if (c != '\0') {
         switch (c) {
@@ -41,6 +42,7 @@ void ingame_update(float dt) {
             case 'd':
                 s->dir = DIR_R;
                 break;
+            case ' ': set_state(STATE_GAMEOVER); break;
         }
     }
 
@@ -52,7 +54,7 @@ void ingame_update(float dt) {
     }
 }
 
-void ingame_render() {
+void state_ingame_render() {
     if (snake_moved) {
         mvaddch(old_tail->y + 1, old_tail->x + 1, ' ');
         snake_draw(s, 1, 1);
@@ -64,6 +66,6 @@ void ingame_render() {
     }
 }
 
-void ingame_screen_resized() {
+void state_ingame_screen_resized() {
 
 }
